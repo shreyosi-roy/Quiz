@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +11,8 @@
 
 <body>
 
-
+<!-- include flash msg -->
+@include('flash-message')
   <div class="d-md-flex h-md-100 align-items-center">
 
     <!-- left panel -->
@@ -26,43 +28,48 @@
     <div class="col-md-6 p-0 bg-white h-md-100 loginarea">
       <div class="d-md-flex align-items-center h-md-100 p-5 justify-content-center">
         <!-- registration form -->
-        <form class="mx-1 mx-md-4">
+        <form class="mx-1 mx-md-4" method="POST" action="{{ route('submit-user')}}">
+        @csrf
 
           <div class="d-flex flex-row align-items-center mb-4">
             <i class="fas fa-user fa-lg me-3 fa-fw"></i>
             <div class="form-outline flex-fill mb-0">
-              <input type="text" id="form3Example1c" class="form-control" />
-              <label class="form-label" for="form3Example1c">Your Name</label>
+              <input type="text" value="{{ old('name')}}" name="name" id="form3Example1c" class="form-control" />
+              <label class="form-label"  for="form3Example1c">Your Name</label>
+              <span class="text-danger">@error('name'){{"user name cannot be blank"}} @enderror</span>
             </div>
           </div>
 
           <div class="d-flex flex-row align-items-center mb-4">
             <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
             <div class="form-outline flex-fill mb-0">
-              <input type="email" id="form3Example3c" class="form-control" />
+              <input type="email" value="{{ old('email')}}" name="email"  id="form3Example3c" class="form-control" />
               <label class="form-label" for="form3Example3c">Your Email</label>
+              <span class="text-danger">@error('email'){{"email Cannot be Blank"}} @enderror</span>
             </div>
           </div>
 
           <div class="d-flex flex-row align-items-center mb-4">
             <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
             <div class="form-outline flex-fill mb-0">
-              <input type="password" autocomplete="new-password" id="form3Example4c" class="form-control" />
-              <label class="form-label" for="form3Example4c">Password</label>
+              <input type="password" value="{{ old('password')}}" name="password" autocomplete="new-password" id="form3Example4c" class="form-control" />
+              <label class="form-label"  for="form3Example4c">Password</label>
+              <span class="text-danger">@error('password'){{ $message }} @enderror</span>
             </div>
           </div>
 
           <div class="d-flex flex-row align-items-center mb-4">
             <i class="fas fa-key fa-lg me-3 fa-fw"></i>
             <div class="form-outline flex-fill mb-0">
-              <input type="password" id="form3Example4cd" class="form-control" />
-              <label class="form-label" for="form3Example4cd">Repeat your password</label>
+              <input value="{{ old('conf-password')}}" name="conf-password" type="password" id="form3Example4cd" class="form-control" />
+              <label class="form-label"  for="form3Example4cd">Repeat your password</label>
+              <span class="text-danger">@error('conf-password'){{ $message }} @enderror</span>
             </div>
           </div>
 
 
           <div class="d-flex flex-row align-items-center mb-4">
-            <button type="button" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;margin-right:2px">Register</button>
+            <button type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;margin-right:2px">Register</button>
             <p class="small fw-bold mt-2 pt-1 mb-0"> Already have an account? <a href="/" class="link-danger">Login</a></p>
           </div>
 

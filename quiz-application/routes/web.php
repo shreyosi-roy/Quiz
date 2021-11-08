@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\QuizController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -19,15 +22,21 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::post('login', [UserController::class, 'check'])->name('login');
+
+
 //registration ui view
 Route::get('/registration', function () {
     return view('auth.registration');
 });
+Route::post('submit-user', [UserController::class, 'submit'])->name('submit-user');
+
 //quiz question upload ui view
 
 Route::get('/upload', function () {
     return view('question.upload');
 });
+Route::post('submit', [QuizController::class, 'submit'])->name('submit');
 
 // dashboard view
 
@@ -46,3 +55,10 @@ Route::get('/quiz', function () {
 Route::get('/view-result', function () {
     return view('user.view-result');
 });
+
+//logout route
+Route::get('/logout', [UserController::class,'logout']);
+
+Route::get('/quiz', [QuizController::class,'getquiz']);
+
+Route::post('/quizsubmit', [QuizController::class,'quizsubmit'])->name('quizsubmit');
