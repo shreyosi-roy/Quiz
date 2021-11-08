@@ -17,48 +17,43 @@ use App\Http\Controllers\QuizController;
 */
 
 // landing screen
-
 Route::get('/', function () {
     return view('auth.login');
 });
-
 Route::post('login', [UserController::class, 'check'])->name('login');
-
-
+//logout route
+Route::get('/logout', [UserController::class, 'logout']);
 //registration ui view
 Route::get('/registration', function () {
     return view('auth.registration');
 });
+//submit new user
 Route::post('submit-user', [UserController::class, 'submit'])->name('submit-user');
 
-//quiz question upload ui view
 
-Route::get('/upload', function () {
-    return view('question.upload');
+Route::group(['middleware' => ['loginauth']], function () {
+    // dashboard view
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    });
+    Route::group(['middleware' => ['adminauth']], function () {
+
+        //quiz question upload ui view
+        Route::get('/upload', function () {
+            return view('question.upload');
+        });
+        //submit quiz question
+        Route::post('submit', [QuizController::class, 'submit'])->name('submit');
+    });
+
+
+        // result viewing UI
+        Route::get('/view-result', function () {
+            return view('user.view-result');
+        });
+        //view quiz screen
+        Route::get('/quiz', [QuizController::class, 'getquiz']);
+        //quiz submit
+        Route::post('/quizsubmit', [QuizController::class, 'quizsubmit'])->name('quizsubmit');
+    
 });
-Route::post('submit', [QuizController::class, 'submit'])->name('submit');
-
-// dashboard view
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
-
-// quiz screen view
-
-Route::get('/quiz', function () {
-    return view('user.quiz');
-});
-
-// result viewing UI
-
-Route::get('/view-result', function () {
-    return view('user.view-result');
-});
-
-//logout route
-Route::get('/logout', [UserController::class,'logout']);
-
-Route::get('/quiz', [QuizController::class,'getquiz']);
-
-Route::post('/quizsubmit', [QuizController::class,'quizsubmit'])->name('quizsubmit');

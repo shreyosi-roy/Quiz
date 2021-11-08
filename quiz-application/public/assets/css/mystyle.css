@@ -14,8 +14,15 @@
 html, body {
     height:100%;
   }
+  #qz{
+    height: auto;
+    margin-top: 5px;
+    color: whitesmoke;
+    font-size: 18px;
+    text-align: center;
+  }
 .container{
-    height: 60%;
+    height: 70%;
     margin-top: 5px;
     color: whitesmoke;
     font-size: 18px;
